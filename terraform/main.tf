@@ -41,3 +41,11 @@ resource "aws_subnet" "private" {
     Name = "private-subnet"
   }
 }
+
+# --- Internet Gateway ---
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main.id
+  tags = {
+    Name = "phase4-igw"
+  }
+}
