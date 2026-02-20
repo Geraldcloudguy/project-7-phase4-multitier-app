@@ -140,3 +140,32 @@ resource "aws_instance" "web" {
     Name = "web-server"
   }
 }
+
+# --- RDS PostgreSQL Database ---
+resource "aws_db_instance" "db" {
+  allocated_storage    = 20
+  engine               = "postgres"
+  engine_version       = "15.3"
+  instance_class       = "db.t3.micro"
+  name                 = "phase4db"
+  username             = "adminuser"
+  password             = "AdminPass123!"  # For demo only; use Secrets Manager in real projects
+  parameter_group_name = "default.postgres15"
+  publicly_accessible  = false
+  vpc_security_group_ids = [aws_security_group.db_sg.id]
+  db_subnet_group_name   = aws_db_subnet_group.db_subnets.id
+  skip_final_snapshot    = true
+
+  tags = {
+    Name = "phase4-db"
+  }
+}
+
+# --- DB Subnet Group ---
+resource "aws_db_subnet_group" "db_subnets" {
+  name       = "phase4-db-subnet-group"
+  subnet_ids = [aws_subnet.private.id]
+  tags = {
+    Name = "db-subnet-group"
+  }
+}
