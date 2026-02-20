@@ -127,3 +127,16 @@ resource "aws_security_group" "db_sg" {
     Name = "db-sg"
   }
 }
+
+# --- EC2 Web Server ---
+resource "aws_instance" "web" {
+  ami                    = "ami-0c02fb55956c7d316"  # Amazon Linux 2 in us-east-1
+  instance_type          = "t3.micro"
+  subnet_id              = aws_subnet.public.id
+  vpc_security_group_ids = [aws_security_group.web_sg.id]
+  key_name               = "YOUR_KEY_PAIR_NAME"
+
+  tags = {
+    Name = "web-server"
+  }
+}
