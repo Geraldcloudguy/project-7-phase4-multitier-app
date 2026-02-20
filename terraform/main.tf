@@ -169,3 +169,14 @@ resource "aws_db_subnet_group" "db_subnets" {
     Name = "db-subnet-group"
   }
 }
+
+# --- Outputs ---
+output "web_instance_public_ip" {
+  description = "Public IP of the EC2 web server"
+  value       = aws_instance.web.public_ip
+}
+
+output "db_endpoint" {
+  description = "RDS database endpoint"
+  value       = aws_db_instance.db.endpoint
+}
